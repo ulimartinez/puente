@@ -1,0 +1,36 @@
+body {
+    padding-top: 70px;
+    /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+#map {
+  width: 100%;
+  min-height: 700px;
+  position: absolute;
+  margin-top: 50px;
+  left: 0px;
+  top:0px;
+}
+#map-admin {
+  width: 100%;
+  min-height: 600px;
+}
+.hover-bottom{
+  position: absolute;
+  bottom: 0px;
+  margin-bottom: 20px;
+  left: 20%;
+  right: 20%;
+}
+.login-panel {
+    margin-top: 25%;
+}
+.btn-fb {
+    background-color: #8b9dc3;
+    border-color: #3b5998;
+    color: #fff;
+}
+.btn-tweet {
+    background-color: #326ada;
+    border-color:   #433e90;
+    color: #fff;
+}

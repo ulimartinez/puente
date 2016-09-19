@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Puentio</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- custom css -->
+    <link href="css/custom.css" rel="stylesheet">
+
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Puentio</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="index.html">A juarez</a>
+                    </li>
+                    <li>
+                        <a href="#">A El Paso</a>
+                    </li>
+                    <li>
+                        <a href="#">Donacion</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div id="map"></div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+            </div>
+            <br>
+            <div class="text-center hover-bottom">
+              <button class="btn btn-primary btn-block" id="centerButton"><i class="fa fa-map-marker" aria-hidden="true"></i> Centrar</button>
+              <button class="btn btn-warning btn-block" id="reportButton" type="button" data-toggle="modal" data-target="#myModal"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Reportar</button>
+            </div>
+
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+    <!-- Modal -->
+            <div id="myModal" class="modal fade text-justify" role="dialog">
+              <div class="modal-dialog modal-sm">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Reportar Avería</h4>
+                  </div>
+                  <form id="reportForm" method="POST" action="reportHandler.php">
+                  <div class="modal-body">
+                    <label>
+                      Titulo
+                    </label>
+                    <input autocomplete="off" type="text" class="form-control" name="title" id="titutlo" placeholder="Bache..." required>
+
+                    <label>
+                      Direccion
+                    </label>
+                    <input type="text" class="form-control" name="direccion" id="direccion" placeholder="Direccion..." readonly required>
+
+                    <!-- Lat y Lng -->
+                    <input type="text" class="form-control" name="lat" id="selLat" hidden style="display:none;">
+                    <input type="text" class="form-control" name="lng" id="selLng" hidden style="display:none;">
+
+                    <label>
+                      Tipo de avería
+                    </label><br>
+                    <input type="radio" name="type" value="fuga" id="fuga"> <i class="fa fa-fw fa-stumbleupon" aria-hidden="true"></i> <label for="fuga">Fuga de agua</label><br>
+                    <input type="radio" name="type" value="bache" id="bache"> <i class="fa fa-fw fa-road" aria-hidden="true"></i> <label for="bache">Bache</label><br>
+                    <input type="radio" name="type" value="poste" id="poste"> <i class="fa fa-fw fa-lightbulb-o" aria-hidden="true"></i> <label for="poste">Poste de luz fundido</label><br>
+                    <input type="radio" name="type" value="otro" id="otro" checked="checked"> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> <label for="otro">Otro</label><br>
+
+                    <label>
+                      Comentarios
+                    </label>
+                    <textarea autocomplete="off" class="form-control" name="comentarios" id="comentarios" placeholder="Esta averia..." required></textarea><br>
+
+
+                    <div class="row">
+                      <div class="col-md-12">
+                        <button type="button" id="picture" class="form-control btn btn-info"><span class="fa fa-camera"></span></button>
+                        <input autocomplete="off" name="image" type="file" accept="image/*" capture="camera" style="display: none;">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Enviar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                  </div>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+            <!-- modal end -->
+        </div>
+        <!-- /.row -->
+        <div id="corroborar_modal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+              </div>
+              <div class="modal-body">
+              </div>
+              <div class="modal-footer">
+                Deseas corroborar este reporte?
+                <form method="POST" action="updateReport.php">
+                  <input type="text" name="numreports" value="" id="numreports2submit" hidden/>
+                  <input type="text" name="id" value="" id="id2submit" hidden/>
+                  <button type="submit" class="btn btn-primary">Si</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery Version 1.11.1 -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="font-awesome/js/fontawesome-markers.min.js"></script>
+
+    <script>
+      // Note: This example requires that you consent to location sharing when
+      // prompted by your browser. If you see the error "The Geolocation service
+      // failed.", it means you probably did not give permission for the browser to
+      // locate you.
+      var map;
+      var center_lat;
+      var center_lng;
+      var lat = 34.397;
+      var lng = -90.644;
+
+      function initMap() {
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: lat, lng: lng},
+          zoom: 18
+        });
+        var reportMarkers = [];
+        google.maps.event.addListener(map, 'idle', function(e){
+          reportMarkers.forEach(function(marker, i){
+            marker.setMap(null);
+          });
+          $.post('reportHandler.php', {'getMarkers':true, 'bounds':map.getBounds().toJSON()}, function(data){
+            data.reports.forEach(function(report, i){
+              if(report[5] == 'bache'){
+                nu_marker = new google.maps.Marker({
+                  position: {lat:parseFloat(report[1]), lng:parseFloat(report[2])},
+                  id: report[3],
+                  map: map,
+                  label: report[4],
+                  title: report[0],
+                  icon: {
+                      path: fontawesome.markers.ROAD,
+                      scale: 0.02,
+                      strokeWeight: 0.2,
+                      strokeColor: 'black',
+                      strokeOpacity: 1,
+                      fillColor: 'black',
+                      fillOpacity: 1,
+                      rotation: 180
+                  }
+                });
+              }if(report[5] == 'fuga'){
+                nu_marker = new google.maps.Marker({
+                  position: {lat:parseFloat(report[1]), lng:parseFloat(report[2])},
+                  id: report[3],
+                  map: map,
+                  label: report[4],
+                  title: report[0],
+                  icon: {
+                      path: fontawesome.markers.STUMBLEUPON,
+                      scale: 0.02,
+                      strokeWeight: 0.2,
+                      strokeColor: 'black',
+                      strokeOpacity: 1,
+                      fillColor: 'blue',
+                      fillOpacity: 1,
+                      rotation: 180
+                  }
+                });
+              }if(report[5] == 'poste'){
+                nu_marker = new google.maps.Marker({
+                  position: {lat:parseFloat(report[1]), lng:parseFloat(report[2])},
+                  id: report[3],
+                  map: map,
+                  // label: report[4],
+                  title: report[0],
+                  icon: {
+                      path: fontawesome.markers.LIGHTBULB_O,
+                      scale: 0.02,
+                      strokeWeight: 0.5,
+                      strokeColor: 'black',
+                      strokeOpacity: 1,
+                      fillColor: 'yellow',
+                      fillOpacity: 1,
+                      rotation: 180
+                  }
+                });
+              }if(report[5] == 'otro'){
+                nu_marker = new google.maps.Marker({
+                  position: {lat:parseFloat(report[1]), lng:parseFloat(report[2])},
+                  id: report[3],
+                  map: map,
+                  label: report[4],
+                  title: report[0],
+                  icon: {
+                      path: fontawesome.markers.WARNING,
+                      scale: 0.02,
+                      strokeWeight: 0.2,
+                      strokeColor: 'black',
+                      strokeOpacity: 1,
+                      fillColor: 'red',
+                      fillOpacity: 1,
+                      rotation: 180
+                  }
+                });
+              }
+              accion_ciudadana = 'Plan de Movilidad Urbana <br /> Telefono(s) - 625 0640, 625 0645 <br /> Email - planjuarez@planjuarez.org <br />JMAS <br /> Telefono 01 656 686 0000 <br />CFE <br /> Telefono - 071';
+              nu_marker.addListener('click', function() {
+                $('#corroborar_modal').modal('show');
+                $.ajax({
+                  url: 'reportInfo.php?id='+this.id,
+                  data: "",
+                  dataType: 'json',
+                  success: function(rows){
+                    row = rows[0];
+                    $('#corroborar_modal').find('.modal-title').html('Reporte ' + row[0] + ', ' + row[1]);
+                    $('#corroborar_modal').find('.modal-body').html('<ul class="list-group"></ul>');
+                    $('#id2submit').val(row[0]);
+                    $('#numreports2submit').val(row[7]);
+                    if(row[6] === null){
+
+                    }else{
+                      $('#corroborar_modal').find('.list-group').append('<li class="list-group-item"><img class="img-responsive" src="img/reports/'+row[6]+'"/></li>');
+                    }
+                    $('#corroborar_modal').find('.list-group').append('<li class="list-group-item"><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> <strong>Direccion:</strong> '+ row[5] +'</li>');
+                    $('#corroborar_modal').find('.list-group').append('<li class="list-group-item"><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> <strong>Fecha y hora de registro:</strong> '+ row[8] +'</li>');
+                    $('#corroborar_modal').find('.list-group').append('<li class="list-group-item"><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i> <strong>Tipo de averia:</strong> '+ row[2] +'</li>');
+                    $('#corroborar_modal').find('.list-group').append('<li class="list-group-item"><i class="fa fa-fw fa-list-ol" aria-hidden="true"></i> <strong>Numero de reportes:</strong> '+ row[7] +'</li>');
+                    if(row[9] == 0){
+                      status = '<i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i> <strong>Status:</strong>  No atendido';
+                    }else{
+                      status = '<i class="fa fa-fw fa-eye" aria-hidden="true"></i> <strong>Status:</strong>  En reparacion';
+                    }
+                    $('#corroborar_modal').find('.list-group').append('<li class="list-group-item">'+status+'</li>');
+                    $('#corroborar_modal').find('.list-group').append('<li class="list-group-item"><i class="fa fa-fw fa-comments" aria-hidden="true"></i> <strong>Comentarios</strong> '+ row[11] +'</li>');
+                    $('#corroborar_modal').find('.list-group').append('<li class="list-group-item"><i class="fa fa-fw fa-hand-grab-o" aria-hidden="true"></i> <strong>Accion ciudadana:</strong> <br /> '+accion_ciudadana+'</li>');
+                  }
+                });
+              });
+              reportMarkers.push(nu_marker);
+            });
+          });
+        });
+
+        var gmarkers = [];
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            center_lat = position.coords.latitude;
+            center_lng = position.coords.longitude;
+            lat = position.coords.latitude;
+            lng = position.coords.longitude;
+            var pos = {
+              lat: lat,
+              lng: lng
+            };
+
+            var marker = new google.maps.Marker({
+              position: pos,
+              map: map,
+              title: 'Hello World!'
+            });
+
+            gmarkers.push(marker);
+
+            map.setCenter(pos);
+          }, function(error) {
+            handleLocationError(true, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, map.getCenter());
+          var marker = new google.maps.Marker({
+            position: {lat: lat, lng: lng},
+            map: map,
+            title: 'Hello World!'
+          });
+
+          gmarkers.push(marker);
+
+        }
+
+        google.maps.event.addListener(map, "click", function(event) {
+          // Aqui se actualizan los valores globales de lat y lng, estas se usan para actualizar el varlor de los input
+          lat = event.latLng.lat();
+          lng = event.latLng.lng();
+        	if(gmarkers.length > 0){
+        		gmarkers[gmarkers.length - 1].setMap(null);
+            	gmarkers.pop();
+        	}
+            marker = new google.maps.Marker({
+              position: {lat: event.latLng.lat(), lng: event.latLng.lng()},
+              map: map,
+              title: 'Hello World!'
+            });
+            gmarkers.push(marker);
+        });
+
+      }
+
+      $('#picture').click(function(e){
+        $('input[type=file]').click();
+      })
+
+      function handleLocationError(browserHasGeolocation, pos) {
+        var infoWindow = new google.maps.InfoWindow({map: map});
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+      }
+
+      function centerMap(newLat,newLng){
+      	map.setCenter({
+      		lat : newLat,
+      		lng : newLng
+      	});
+      }
+
+      $(document).ready(function (){
+        $("#centerButton").on('click', function (){
+          centerMap(center_lat,center_lng);
+        });
+        $("#reportButton").on('click', function (){
+          address = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&sensor=true';
+          $.getJSON( address, function( data ) {
+            $("#direccion").val(data.results[0].formatted_address);
+          });
+          $("#selLat").val(lat);
+          $("#selLng").val(lng);
+        });
+
+      });
+
+      //code to store to db the stuff about the report. makes post request to reportHandler
+      $("#reportForm").on("submit", function(e) {
+		e.preventDefault();
+		var data = new FormData($('form')[0]);
+		data.append('newReport', true);
+        $.ajax({
+            url: $(this).attr("action"),
+            type: 'POST',
+            data: data,
+            cache: false,
+			contentType: false,
+            processData: false,
+            success: function(data) {
+                if(data.hasOwnProperty('success')){
+                  $('#myModal').modal('hide');
+                  $('input:radio').prop('checked', false);
+                  $('form input[type="text"]').val("");
+                }
+            }
+        });
+    });
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqOKEYNU1beICcx6X3SPA4ZplXankSits&callback=initMap">
+    </script>
+
+</body>
+
+</html>
